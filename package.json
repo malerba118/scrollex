@@ -1,0 +1,69 @@
+{
+  "name": "scrollex",
+  "author": "malerba118@gmail.com",
+  "version": "0.0.0",
+  "description": "Simple, declarative scroll experiences for react apps",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "start": "NODE_ENV=production rollup -c -w",
+    "build": "NODE_ENV=production rollup -c",
+    "prepare": "NODE_ENV=production rollup -c"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "framer-motion": ">6.0.0",
+    "react": ">17.0.0",
+    "react-dom": ">17.0.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-json": "^4.1.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
+    "@types/file-saver": "^2.0.2",
+    "@types/jest": "^27.0.1",
+    "@types/lodash.throttle": "^4.1.6",
+    "@types/react": "^17.0.20",
+    "@types/react-dom": "^17.0.9",
+    "autoprefixer": "^10.3.4",
+    "cssnano": "^5.0.8",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^26.6.3",
+    "react": "*",
+    "react-dom": "*",
+    "rollup": "^2.56.3",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-node-polyfills": "^0.2.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "ts-jest": "^26.5.6",
+    "typescript": "^4.4.2"
+  },
+  "dependencies": {
+    "lodash.throttle": "4.1.1",
+    "nanoid": "3.3.2",
+    "popmotion": "11.0.3"
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "files": [
+    "dist"
+  ],
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
+  "browser": {
+    "crypto": false
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
