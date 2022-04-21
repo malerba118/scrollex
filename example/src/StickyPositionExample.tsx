@@ -6,7 +6,7 @@ const ParallaxSection = chakra(Parallax.Section);
 const ParallaxContainer = chakra(Parallax.Container);
 
 const keyframes: Record<string, Keyframes> = {
-  heading: ({ section }) => ({
+  headerText: ({ section }) => ({
     [section.topAt('container-top')]: {
       translateY: 0,
     },
@@ -14,7 +14,7 @@ const keyframes: Record<string, Keyframes> = {
       translateY: 200,
     },
   }),
-  bgImage: ({ section }) => ({
+  headerImage: ({ section }) => ({
     [section.topAt('container-top')]: {
       translateY: 0,
     },
@@ -22,7 +22,7 @@ const keyframes: Record<string, Keyframes> = {
       translateY: 125,
     },
   }),
-  image: ({ section, data }) => ({
+  galleryImage: ({ section, data }) => ({
     [section.topAt('container-top')]: {
       translateZ: data.initialZ,
     },
@@ -30,7 +30,7 @@ const keyframes: Record<string, Keyframes> = {
       translateZ: data.initialZ + 510,
     },
   }),
-  footer: ({ section, container }) => ({
+  footerText: ({ section, container }) => ({
     [section.topAt('container-bottom')]: {
       translateY: 200,
     },
@@ -83,7 +83,11 @@ export default function App() {
       color="whatsapp.400"
     >
       <ParallaxSection h="100vh">
-        <ParallaxItem keyframes={keyframes.bgImage} pos="absolute" inset={0}>
+        <ParallaxItem
+          keyframes={keyframes.headerImage}
+          pos="absolute"
+          inset={0}
+        >
           <Img
             src="https://picsum.photos/id/209/2000/1000"
             objectFit="cover"
@@ -93,7 +97,7 @@ export default function App() {
           />
         </ParallaxItem>
         <Center h="100%">
-          <ParallaxItem keyframes={keyframes.heading}>
+          <ParallaxItem keyframes={keyframes.headerText}>
             <Heading fontSize="9xl">Skrolify</Heading>
           </ParallaxItem>
         </Center>
@@ -110,7 +114,7 @@ export default function App() {
             return (
               <ParallaxItem
                 key={image.src}
-                keyframes={keyframes.image}
+                keyframes={keyframes.galleryImage}
                 pos="absolute"
                 inset={0}
                 display="grid"
@@ -127,7 +131,7 @@ export default function App() {
       </ParallaxSection>
       <ParallaxSection h="100vh">
         <Center h="100%">
-          <ParallaxItem keyframes={keyframes.footer}>
+          <ParallaxItem keyframes={keyframes.footerText}>
             <Heading fontSize="9xl">Skrolify</Heading>
           </ParallaxItem>
         </Center>

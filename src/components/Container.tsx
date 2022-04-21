@@ -3,6 +3,7 @@ import React, {
   FC,
   HTMLProps,
   useContext,
+  useEffect,
   useMemo,
 } from 'react';
 import useParallaxLayoutManager, {
@@ -12,6 +13,7 @@ import useResizeObserver from '../hooks/useResizeObserver';
 import useObservableRef from '../hooks/useObservableRef';
 import { ScrollProvider } from '../hooks/useScroll';
 import { getRect } from '../utils';
+import Section from './Section';
 
 export interface ParallaxApi {
   layoutManager: LayoutManager;

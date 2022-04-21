@@ -38,6 +38,10 @@ export default function App() {
           <Heading display="inline-block" size="4xl">
             What's
           </Heading>
+          <Heading w="300px">
+            test test test test test test test test test test test test
+            whitespace normal
+          </Heading>
         </ParallaxItem>
       </ParallaxSection>
       <ParallaxSection w="100vw" bg="pink.200">

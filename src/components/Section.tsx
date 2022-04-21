@@ -87,6 +87,7 @@ const Section: FC<ParallaxSectionProps> = ({
           visibility: isReady ? 'visible' : 'hidden',
           overflow: showOverflow ? 'visible' : 'hidden',
           display: scrollAxis === 'y' ? 'block' : 'inline-block',
+          whiteSpace: 'normal',
           ...otherProps.style,
         }}
       >
