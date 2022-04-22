@@ -13,11 +13,11 @@ import useResizeObserver from '../hooks/useResizeObserver';
 import useObservableRef from '../hooks/useObservableRef';
 import { ScrollProvider } from '../hooks/useScroll';
 import { getRect } from '../utils';
-import Section from './Section';
 
 export interface ParallaxApi {
   layoutManager: LayoutManager;
   scrollAxis: 'x' | 'y';
+  throttleAmount: number;
 }
 
 const ParallaxContext = createContext<ParallaxApi | null>(null);
@@ -36,12 +36,14 @@ export interface ParallaxContainerProps extends HTMLProps<HTMLDivElement> {
   scrollAxis?: 'x' | 'y';
   height: string | number;
   width: string | number;
+  throttleAmount?: number;
 }
 
 const Container: FC<ParallaxContainerProps> = ({
   scrollAxis = 'y',
   height,
   width,
+  throttleAmount = 90,
   children,
   ...otherProps
 }) => {
@@ -56,8 +58,9 @@ const Container: FC<ParallaxContainerProps> = ({
     () => ({
       scrollAxis,
       layoutManager,
+      throttleAmount,
     }),
-    [scrollAxis, layoutManager]
+    [scrollAxis, layoutManager, throttleAmount]
   );
 
   return (

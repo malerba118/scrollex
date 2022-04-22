@@ -10,7 +10,7 @@ import {
   Animation as PopmotionAnimation,
 } from 'popmotion';
 import throttle from 'lodash.throttle';
-import { JSONValue, Rect } from '../types';
+import { LayoutSection, LayoutContainer } from '../utils';
 
 export type StyleObj = {
   scale?: number | string;
@@ -39,78 +39,6 @@ export type KeyframesObj = Record<number, StyleObj>;
 export type KeyframesFn = (context: KeyframesContext) => KeyframesObj;
 export type Keyframes = KeyframesFn | KeyframesObj;
 export type KeyframesMap = Map<number, StyleObj>;
-
-class LayoutSection {
-  private container: Rect;
-  private x: number;
-  private y: number;
-  height: number;
-  width: number;
-
-  constructor(section: Rect, container: Rect) {
-    this.x = section.x;
-    this.y = section.y;
-    this.width = section.width;
-    this.height = section.height;
-    this.container = container;
-  }
-
-  topAt(position: 'container-top' | 'container-center' | 'container-bottom') {
-    if (position === 'container-top') {
-      return this.y;
-    } else if (position === 'container-center') {
-      return this.y - this.container.height / 2;
-    } else {
-      return this.y - this.container.height;
-    }
-  }
-
-  bottomAt(
-    position: 'container-top' | 'container-center' | 'container-bottom'
-  ) {
-    if (position === 'container-top') {
-      return this.y + this.height;
-    } else if (position === 'container-center') {
-      return this.y + this.height - this.container.height / 2;
-    } else {
-      return this.y + this.height - this.container.height;
-    }
-  }
-
-  leftAt(position: 'container-left' | 'container-center' | 'container-right') {
-    if (position === 'container-left') {
-      return this.x;
-    } else if (position === 'container-center') {
-      return this.x - this.container.width / 2;
-    } else {
-      return this.x - this.container.width;
-    }
-  }
-
-  rightAt(position: 'container-left' | 'container-center' | 'container-right') {
-    if (position === 'container-left') {
-      return this.x + this.width;
-    } else if (position === 'container-center') {
-      return this.x + this.width - this.container.width / 2;
-    } else {
-      return this.x + this.width - this.container.width;
-    }
-  }
-}
-
-class LayoutContainer {
-  private x: number;
-  private y: number;
-  width: number;
-  height: number;
-
-  constructor(container: Rect) {
-    this.x = container.x;
-    this.y = container.y;
-    this.width = container.width;
-    this.height = container.height;
-  }
-}
 
 interface Animation {
   get(progress: number): any;
@@ -280,8 +208,8 @@ const DEFAULT_SPRING_CONFIGS: SpringConfigs = {
   },
 };
 
-const Springs = ({ keyframes, data, onSprings }: any) => {
-  const { layoutManager, scrollAxis } = useParallaxApi();
+const Springs = ({ keyframes, springConfigs, data, onSprings }: any) => {
+  const { layoutManager, scrollAxis, throttleAmount } = useParallaxApi();
   const { sectionId } = useSection();
   const scroll = useScroll();
 
@@ -309,58 +237,64 @@ const Springs = ({ keyframes, data, onSprings }: any) => {
       opacity: getAnimationForProperty('opacity', keyframesMap),
     };
   }, [layoutManager.layout, keyframes, JSON.stringify(data)]);
+
+  const mergedSpringConfigs = {
+    ...DEFAULT_SPRING_CONFIGS,
+    ...springConfigs,
+  };
+
   const springs = {
     translateX: useSpring(
       animations.translateX?.get(0) ?? '0',
-      DEFAULT_SPRING_CONFIGS.translateX
+      mergedSpringConfigs.translateX
     ),
     translateY: useSpring(
       animations.translateY?.get(0) ?? '0',
-      DEFAULT_SPRING_CONFIGS.translateY
+      mergedSpringConfigs.translateY
     ),
     translateZ: useSpring(
       animations.translateZ?.get(0) ?? '0',
-      DEFAULT_SPRING_CONFIGS.translateZ
+      mergedSpringConfigs.translateZ
     ),
     scale: useSpring(
       animations.scale?.get(0) ?? '1',
-      DEFAULT_SPRING_CONFIGS.scale
+      mergedSpringConfigs.scale
     ),
     scaleX: useSpring(
       animations.scaleX?.get(0) ?? '1',
-      DEFAULT_SPRING_CONFIGS.scaleX
+      mergedSpringConfigs.scaleX
     ),
     scaleY: useSpring(
       animations.scaleY?.get(0) ?? '1',
-      DEFAULT_SPRING_CONFIGS.scaleY
+      mergedSpringConfigs.scaleY
     ),
     scaleZ: useSpring(
       animations.scaleZ?.get(0) ?? '1',
-      DEFAULT_SPRING_CONFIGS.scaleZ
+      mergedSpringConfigs.scaleZ
     ),
     skewX: useSpring(
       animations.skewX?.get(0) ?? '0',
-      DEFAULT_SPRING_CONFIGS.skewX
+      mergedSpringConfigs.skewX
     ),
     skewY: useSpring(
       animations.skewY?.get(0) ?? '0',
-      DEFAULT_SPRING_CONFIGS.skewY
+      mergedSpringConfigs.skewY
     ),
     rotateX: useSpring(
       animations.rotateX?.get(0) ?? '0',
-      DEFAULT_SPRING_CONFIGS.rotateX
+      mergedSpringConfigs.rotateX
     ),
     rotateY: useSpring(
       animations.rotateY?.get(0) ?? '0',
-      DEFAULT_SPRING_CONFIGS.rotateY
+      mergedSpringConfigs.rotateY
     ),
     rotateZ: useSpring(
       animations.rotateZ?.get(0) ?? '0',
-      DEFAULT_SPRING_CONFIGS.rotateZ
+      mergedSpringConfigs.rotateZ
     ),
     opacity: useSpring(
       animations.opacity?.get(0) ?? '1',
-      DEFAULT_SPRING_CONFIGS.opacity
+      mergedSpringConfigs.opacity
     ),
   };
 
@@ -382,7 +316,7 @@ const Springs = ({ keyframes, data, onSprings }: any) => {
         springs.rotateZ.set(animations.rotateZ?.get(progress) ?? '0');
         springs.opacity.set(animations.opacity?.get(progress) ?? '1');
       },
-      90,
+      throttleAmount,
       { leading: true, trailing: true }
     );
     if (scrollAxis === 'y') {
@@ -394,6 +328,7 @@ const Springs = ({ keyframes, data, onSprings }: any) => {
     }
   }, [
     scrollAxis,
+    throttleAmount,
     scroll.position.y,
     scroll.position.x,
     animations,
@@ -409,11 +344,13 @@ const Springs = ({ keyframes, data, onSprings }: any) => {
 
 export interface ParallaxItemProps extends HTMLMotionProps<'div'> {
   keyframes?: Keyframes;
+  springs?: SpringConfigs;
   data?: any;
 }
 
 const Item: FC<ParallaxItemProps> = ({
   keyframes = {},
+  springs: springConfigs = {},
   data,
   ...otherProps
 }) => {
@@ -423,7 +360,12 @@ const Item: FC<ParallaxItemProps> = ({
   return (
     <>
       {isReady && (
-        <Springs keyframes={keyframes} data={data} onSprings={setSprings} />
+        <Springs
+          keyframes={keyframes}
+          springConfigs={springConfigs}
+          data={data}
+          onSprings={setSprings}
+        />
       )}
       <motion.div
         {...otherProps}

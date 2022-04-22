@@ -1,5 +1,6 @@
 import { Parallax, Keyframes } from 'scrollex';
 import { Center, chakra, Heading, Img } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 
 const ParallaxItem = chakra(Parallax.Item);
 const ParallaxSection = chakra(Parallax.Section);
@@ -24,6 +25,12 @@ const keyframes: Record<string, Keyframes> = {
 };
 
 export default function App() {
+  const [mass, setMass] = useState(2);
+  useEffect(() => {
+    setTimeout(() => {
+      setMass(0.2);
+    }, 10000);
+  }, []);
   return (
     <Parallax.Container scrollAxis="x" height="100vh" width="100vw">
       <ParallaxSection w="100vw" bg="blue.200" style={{ perspective: 500 }}>
@@ -34,7 +41,11 @@ export default function App() {
         </ParallaxItem>
       </ParallaxSection>
       <ParallaxSection w="100vw" bg="green.200">
-        <ParallaxItem display="inline-block" keyframes={keyframes.heading}>
+        <ParallaxItem
+          display="inline-block"
+          keyframes={keyframes.heading}
+          springs={{ rotateZ: { mass } }}
+        >
           <Heading display="inline-block" size="4xl">
             What's
           </Heading>
