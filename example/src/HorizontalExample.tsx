@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 const ScrollItem = chakra(Scroll.Item);
 const ScrollSection = chakra(Scroll.Section);
+const ScrollContainer = chakra(Scroll.Container);
 
 const keyframes: Record<string, Keyframes> = {
   heading: ({ section, scrollMax }) => ({
@@ -33,7 +34,7 @@ export default function App() {
   }, []);
   return (
     <>
-      <Scroll.Container scrollAxis="x" height="100vh" width="100vw">
+      <ScrollContainer scrollAxis="x" h="100vh">
         <ScrollSection w="100vw" bg="blue.200" style={{ perspective: 500 }}>
           <ScrollItem display="inline-block" keyframes={keyframes.heading}>
             <Heading display="inline-block" size="4xl">
@@ -77,7 +78,7 @@ export default function App() {
             </Heading>
           </ScrollItem>
         </ScrollSection>
-      </Scroll.Container>
+      </ScrollContainer>
     </>
   );
 }

@@ -3,9 +3,10 @@ import { Center, chakra, Img } from '@chakra-ui/react';
 
 const ScrollItem = chakra(Scroll.Item);
 const ScrollSection = chakra(Scroll.Section);
+const ScrollContainer = chakra(Scroll.Container);
 
 const keyframes: Record<string, Keyframes> = {
-  image: ({ section, container, scrollMax }) => ({
+  image: ({ section }) => ({
     [section.topAt('container-bottom')]: {
       translateY: 125,
       translateX: -250,
@@ -47,7 +48,7 @@ const images = [
 
 export default function App() {
   return (
-    <Scroll.Container scrollAxis="y" height="100vh" width="100vw">
+    <ScrollContainer scrollAxis="y" height="100vh">
       {images.map((image) => {
         return (
           <ScrollSection key={image} height="100vh">
@@ -58,18 +59,12 @@ export default function App() {
               style={{ perspective: 600 }}
             >
               <ScrollItem keyframes={keyframes.image} overflow="hidden">
-                <Img
-                  key={image}
-                  src={image}
-                  h="300px"
-                  w="200px"
-                  objectFit="cover"
-                />
+                <Img src={image} h="300px" w="200px" objectFit="cover" />
               </ScrollItem>
             </Center>
           </ScrollSection>
         );
       })}
-    </Scroll.Container>
+    </ScrollContainer>
   );
 }

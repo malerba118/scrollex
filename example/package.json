@@ -18,6 +18,7 @@
     "framer-motion": "^6.3.0",
     "react": "file:../node_modules/react",
     "react-dom": "file:../node_modules/react-dom",
+    "react-fps-stats": "^0.2.3",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
     "scrollex": "file:../",

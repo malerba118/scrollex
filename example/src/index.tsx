@@ -8,11 +8,14 @@ import HorizontalExample from './HorizontalExample';
 import reportWebVitals from './reportWebVitals';
 import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+// @ts-ignore
+import FPSStats from 'react-fps-stats';
 import theme from './theme';
 
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
+      <FPSStats />
       <BrowserRouter>
         <Routes>
           <Route path="fixed-position" element={<FixedPositionExample />} />

@@ -30,7 +30,7 @@ const keyframes: Record<string, Keyframes> = {
       translateZ: data.initialZ + 510,
     },
   }),
-  footerText: ({ section, container }) => ({
+  footerText: ({ section }) => ({
     [section.topAt('container-bottom')]: {
       translateY: 200,
     },
@@ -78,7 +78,6 @@ export default function App() {
     <ScrollContainer
       scrollAxis="y"
       height="100vh"
-      width="100vw"
       bg="rgba(20, 19, 21, .96)"
       color="whatsapp.400"
     >

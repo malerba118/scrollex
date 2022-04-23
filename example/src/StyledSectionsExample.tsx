@@ -3,6 +3,7 @@ import { Center, chakra, Heading, Img } from '@chakra-ui/react';
 
 const ScrollItem = chakra(Scroll.Item);
 const ScrollSection = chakra(Scroll.Section);
+const ScrollContainer = chakra(Scroll.Container);
 
 const keyframes: Record<string, Keyframes> = {
   heading: ({ section }) => ({
@@ -24,7 +25,7 @@ const keyframes: Record<string, Keyframes> = {
 
 export default function App() {
   return (
-    <Scroll.Container scrollAxis="y" height="100vh" width="100vw">
+    <ScrollContainer scrollAxis="y" height="100vh" throttleAmount={2000}>
       <ScrollSection height="300px">
         <ScrollItem>
           <Heading size="4xl">Yo</Heading>
@@ -70,6 +71,6 @@ export default function App() {
           <Heading size="4xl">?</Heading>
         </ScrollItem>
       </ScrollSection>
-    </Scroll.Container>
+    </ScrollContainer>
   );
 }

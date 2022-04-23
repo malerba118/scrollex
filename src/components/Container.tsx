@@ -3,7 +3,6 @@ import React, {
   FC,
   HTMLProps,
   useContext,
-  useEffect,
   useMemo,
 } from 'react';
 import useScrollLayoutManager, {
@@ -28,15 +27,11 @@ export const useScrollContainer = () => {
 
 export interface ScrollContainerProps extends HTMLProps<HTMLDivElement> {
   scrollAxis?: 'x' | 'y';
-  height: string | number;
-  width: string | number;
   throttleAmount?: number;
 }
 
 const Container: FC<ScrollContainerProps> = ({
   scrollAxis = 'y',
-  height,
-  width,
   throttleAmount = 90,
   children,
   ...otherProps
@@ -64,10 +59,9 @@ const Container: FC<ScrollContainerProps> = ({
         style={{
           position: 'relative',
           whiteSpace: 'nowrap',
-          height,
-          width,
           overflowX: scrollAxis === 'x' ? 'auto' : 'hidden',
           overflowY: scrollAxis === 'y' ? 'auto' : 'hidden',
+          ...otherProps.style,
         }}
         ref={containerRef}
       >
