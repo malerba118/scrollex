@@ -1,9 +1,9 @@
-import { Parallax, Keyframes } from 'scrollex';
+import { Scroll, Keyframes } from 'scrollex';
 import { Center, chakra, Heading, Img } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
-const ParallaxItem = chakra(Parallax.Item);
-const ParallaxSection = chakra(Parallax.Section);
+const ScrollItem = chakra(Scroll.Item);
+const ScrollSection = chakra(Scroll.Section);
 
 const keyframes: Record<string, Keyframes> = {
   heading: ({ section, scrollMax }) => ({
@@ -32,43 +32,52 @@ export default function App() {
     }, 10000);
   }, []);
   return (
-    <Parallax.Container scrollAxis="x" height="100vh" width="100vw">
-      <ParallaxSection w="100vw" bg="blue.200" style={{ perspective: 500 }}>
-        <ParallaxItem display="inline-block" keyframes={keyframes.heading}>
-          <Heading display="inline-block" size="4xl">
-            Yo
-          </Heading>
-        </ParallaxItem>
-      </ParallaxSection>
-      <ParallaxSection w="100vw" bg="green.200">
-        <ParallaxItem
-          display="inline-block"
-          keyframes={keyframes.heading}
-          springs={{ rotateZ: { mass } }}
-        >
-          <Heading display="inline-block" size="4xl">
-            What's
-          </Heading>
-          <Heading w="300px">
-            test test test test test test test test test test test test
-            whitespace normal
-          </Heading>
-        </ParallaxItem>
-      </ParallaxSection>
-      <ParallaxSection w="100vw" bg="pink.200">
-        <ParallaxItem display="inline-block" keyframes={keyframes.heading}>
-          <Heading display="inline-block" size="4xl">
-            Up
-          </Heading>
-        </ParallaxItem>
-      </ParallaxSection>
-      <ParallaxSection w="100vw" bg="orange.200">
-        <ParallaxItem display="inline-block" keyframes={keyframes.heading}>
-          <Heading display="inline-block" size="4xl">
-            ?
-          </Heading>
-        </ParallaxItem>
-      </ParallaxSection>
-    </Parallax.Container>
+    <>
+      <Scroll.Container scrollAxis="x" height="100vh" width="100vw">
+        <ScrollSection w="100vw" bg="blue.200" style={{ perspective: 500 }}>
+          <ScrollItem display="inline-block" keyframes={keyframes.heading}>
+            <Heading display="inline-block" size="4xl">
+              Yo
+            </Heading>
+          </ScrollItem>
+        </ScrollSection>
+        <ScrollSection w="100vw" bg="green.200">
+          <ScrollItem
+            display="inline-block"
+            keyframes={keyframes.heading}
+            springs={{ rotateZ: { mass } }}
+          >
+            <Heading display="inline-block" size="4xl">
+              What's
+            </Heading>
+            <Heading w="300px">
+              test test test test test test test test test test test test
+              whitespace normal
+            </Heading>
+          </ScrollItem>
+        </ScrollSection>
+        <ScrollSection w="100vw" bg="pink.200">
+          <ScrollItem display="inline-block" keyframes={keyframes.heading}>
+            <Heading display="inline-block" size="4xl">
+              Up
+            </Heading>
+          </ScrollItem>
+        </ScrollSection>
+        <ScrollSection w="100vw" bg="orange.200">
+          <ScrollItem display="inline-block" keyframes={keyframes.heading}>
+            <Heading display="inline-block" size="4xl">
+              ?
+            </Heading>
+          </ScrollItem>
+        </ScrollSection>
+        <ScrollSection w="100vw" bg="orange.200">
+          <ScrollItem display="inline-block" keyframes={keyframes.heading}>
+            <Heading display="inline-block" size="4xl">
+              ?
+            </Heading>
+          </ScrollItem>
+        </ScrollSection>
+      </Scroll.Container>
+    </>
   );
 }

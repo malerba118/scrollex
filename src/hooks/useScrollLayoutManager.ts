@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { Rect } from '../types';
 
-interface UseParallaxLayoutManagerParams {
+interface UseScrollLayoutManagerParams {
   scrollAxis: 'x' | 'y';
 }
 
@@ -17,9 +17,9 @@ export interface LayoutManager {
   setSectionRect: (sectionId: string, rect: Rect) => void;
 }
 
-const useParallaxLayoutManager = ({
+const useScrollLayoutManager = ({
   scrollAxis,
-}: UseParallaxLayoutManagerParams): LayoutManager => {
+}: UseScrollLayoutManagerParams): LayoutManager => {
   let [container, setContainer] = useState<Rect>({
     x: 0,
     y: 0,
@@ -75,4 +75,4 @@ const useParallaxLayoutManager = ({
   );
 };
 
-export default useParallaxLayoutManager;
+export default useScrollLayoutManager;

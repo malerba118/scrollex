@@ -11,7 +11,7 @@ import { nanoid } from 'nanoid';
 import useResizeObserver from '../hooks/useResizeObserver';
 import useObservableRef from '../hooks/useObservableRef';
 import { getRect } from '../utils';
-import { useParallaxApi } from './Container';
+import { useScrollContainer } from './Container';
 import { HTMLMotionProps, motion } from 'framer-motion';
 //@ts-ignore
 import styles from './Section.module.css';
@@ -24,18 +24,14 @@ interface SectionContextApi {
 const SectionContext = createContext<SectionContextApi | null>(null);
 
 export const useSection = () => {
-  const context = useContext(SectionContext);
-  if (!context) {
-    throw new Error('useSection can only be used inside of a Parallax.Section');
-  }
-  return context;
+  return useContext(SectionContext);
 };
 
-export interface ParallaxSectionProps extends HTMLMotionProps<'div'> {
+export interface ScrollSectionProps extends HTMLMotionProps<'div'> {
   showOverflow?: boolean;
 }
 
-const Section: FC<ParallaxSectionProps> = ({
+const Section: FC<ScrollSectionProps> = ({
   showOverflow = false,
   children,
   className,
@@ -43,7 +39,22 @@ const Section: FC<ParallaxSectionProps> = ({
 }) => {
   const sectionRef = useObservableRef<HTMLDivElement | null>(null);
   const [sectionId] = useState(() => nanoid());
-  const { layoutManager, scrollAxis } = useParallaxApi();
+  const container = useScrollContainer();
+  const section = useSection();
+
+  if (section !== null) {
+    throw new Error(
+      'Scroll.Section cannot be nested within another Scroll.Section'
+    );
+  }
+
+  if (container === null) {
+    throw new Error(
+      'Scroll.Section can only be used within a Scroll.Container'
+    );
+  }
+
+  const { layoutManager, scrollAxis } = container;
 
   useResizeObserver(sectionRef, (entry) => {
     layoutManager.setSectionRect(

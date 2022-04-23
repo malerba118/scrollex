@@ -6,40 +6,34 @@ import React, {
   useEffect,
   useMemo,
 } from 'react';
-import useParallaxLayoutManager, {
+import useScrollLayoutManager, {
   LayoutManager,
-} from '../hooks/useParallaxLayoutManager';
+} from '../hooks/useScrollLayoutManager';
 import useResizeObserver from '../hooks/useResizeObserver';
 import useObservableRef from '../hooks/useObservableRef';
 import { ScrollProvider } from '../hooks/useScroll';
 import { getRect } from '../utils';
 
-export interface ParallaxApi {
+export interface ScrollContainerApi {
   layoutManager: LayoutManager;
   scrollAxis: 'x' | 'y';
   throttleAmount: number;
 }
 
-const ParallaxContext = createContext<ParallaxApi | null>(null);
+const ScrollContainerContext = createContext<ScrollContainerApi | null>(null);
 
-export const useParallaxApi = () => {
-  const context = useContext(ParallaxContext);
-  if (!context) {
-    throw new Error(
-      'useParallaxApi can only be used inside of a Parallax.Container'
-    );
-  }
-  return context;
+export const useScrollContainer = () => {
+  return useContext(ScrollContainerContext);
 };
 
-export interface ParallaxContainerProps extends HTMLProps<HTMLDivElement> {
+export interface ScrollContainerProps extends HTMLProps<HTMLDivElement> {
   scrollAxis?: 'x' | 'y';
   height: string | number;
   width: string | number;
   throttleAmount?: number;
 }
 
-const Container: FC<ParallaxContainerProps> = ({
+const Container: FC<ScrollContainerProps> = ({
   scrollAxis = 'y',
   height,
   width,
@@ -48,13 +42,13 @@ const Container: FC<ParallaxContainerProps> = ({
   ...otherProps
 }) => {
   const containerRef = useObservableRef<HTMLDivElement | null>(null);
-  const layoutManager = useParallaxLayoutManager({ scrollAxis });
+  const layoutManager = useScrollLayoutManager({ scrollAxis });
 
   useResizeObserver(containerRef, (entry) => {
     layoutManager.setContainerRect(getRect(entry.target as HTMLElement));
   });
 
-  const parallaxApi = useMemo(
+  const scrollContainerApi = useMemo(
     () => ({
       scrollAxis,
       layoutManager,
@@ -64,7 +58,7 @@ const Container: FC<ParallaxContainerProps> = ({
   );
 
   return (
-    <ParallaxContext.Provider value={parallaxApi}>
+    <ScrollContainerContext.Provider value={scrollContainerApi}>
       <ScrollProvider
         {...otherProps}
         style={{
@@ -79,7 +73,7 @@ const Container: FC<ParallaxContainerProps> = ({
       >
         {children}
       </ScrollProvider>
-    </ParallaxContext.Provider>
+    </ScrollContainerContext.Provider>
   );
 };
 

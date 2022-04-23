@@ -1,9 +1,9 @@
-import { Parallax, Keyframes } from 'scrollex';
+import { Scroll, Keyframes } from 'scrollex';
 import { Box, Center, chakra, Heading, Img } from '@chakra-ui/react';
 
-const ParallaxItem = chakra(Parallax.Item);
-const ParallaxSection = chakra(Parallax.Section);
-const ParallaxContainer = chakra(Parallax.Container);
+const ScrollItem = chakra(Scroll.Item);
+const ScrollSection = chakra(Scroll.Section);
+const ScrollContainer = chakra(Scroll.Container);
 
 const keyframes: Record<string, Keyframes> = {
   headerText: ({ section }) => ({
@@ -75,19 +75,15 @@ const images = [
 
 export default function App() {
   return (
-    <ParallaxContainer
+    <ScrollContainer
       scrollAxis="y"
       height="100vh"
       width="100vw"
       bg="rgba(20, 19, 21, .96)"
       color="whatsapp.400"
     >
-      <ParallaxSection h="100vh">
-        <ParallaxItem
-          keyframes={keyframes.headerImage}
-          pos="absolute"
-          inset={0}
-        >
+      <ScrollSection h="100vh">
+        <ScrollItem keyframes={keyframes.headerImage} pos="absolute" inset={0}>
           <Img
             src="https://picsum.photos/id/209/2000/1000"
             objectFit="cover"
@@ -95,14 +91,14 @@ export default function App() {
             w="100%"
             transform="scale(1.25)"
           />
-        </ParallaxItem>
+        </ScrollItem>
         <Center h="100%">
-          <ParallaxItem keyframes={keyframes.headerText}>
+          <ScrollItem keyframes={keyframes.headerText}>
             <Heading fontSize="9xl">Skrolify</Heading>
-          </ParallaxItem>
+          </ScrollItem>
         </Center>
-      </ParallaxSection>
-      <ParallaxSection showOverflow height="500vh">
+      </ScrollSection>
+      <ScrollSection showOverflow height="500vh">
         <Box
           pos="sticky"
           top={0}
@@ -112,7 +108,7 @@ export default function App() {
         >
           {images.map((image) => {
             return (
-              <ParallaxItem
+              <ScrollItem
                 key={image.src}
                 keyframes={keyframes.galleryImage}
                 pos="absolute"
@@ -124,18 +120,18 @@ export default function App() {
                 data={{ initialZ: image.z }}
               >
                 <Img src={image.src} h="250px" objectFit="cover" />
-              </ParallaxItem>
+              </ScrollItem>
             );
           })}
         </Box>
-      </ParallaxSection>
-      <ParallaxSection h="100vh">
+      </ScrollSection>
+      <ScrollSection h="100vh">
         <Center h="100%">
-          <ParallaxItem keyframes={keyframes.footerText}>
+          <ScrollItem keyframes={keyframes.footerText}>
             <Heading fontSize="9xl">Skrolify</Heading>
-          </ParallaxItem>
+          </ScrollItem>
         </Center>
-      </ParallaxSection>
-    </ParallaxContainer>
+      </ScrollSection>
+    </ScrollContainer>
   );
 }

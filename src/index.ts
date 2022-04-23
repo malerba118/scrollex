@@ -3,7 +3,7 @@ import Section from './components/Section';
 import Item from './components/Item';
 export type { Keyframes } from './components/Item';
 
-export const Parallax = {
+export const Scroll = {
   Container,
   Section,
   Item,

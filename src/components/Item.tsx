@@ -1,9 +1,9 @@
 import { HTMLMotionProps, motion, MotionValue, useSpring } from 'framer-motion';
 import React, { FC, useEffect, useMemo, useState } from 'react';
-import { useParallaxApi } from './Container';
+import { useScrollContainer } from './Container';
 import { useSection } from './Section';
 import { useScroll } from '../hooks/useScroll';
-import { Layout } from '../hooks/useParallaxLayoutManager';
+import { Layout } from '../hooks/useScrollLayoutManager';
 import {
   keyframes as animation,
   SpringOptions,
@@ -25,7 +25,7 @@ export type StyleObj = {
   rotateZ?: number | string;
   skewX?: number | string;
   skewY?: number | string;
-  opacity?: number;
+  opacity?: number | string;
 };
 
 export type KeyframesContext = {
@@ -209,16 +209,26 @@ const DEFAULT_SPRING_CONFIGS: SpringConfigs = {
 };
 
 const Springs = ({ keyframes, springConfigs, data, onSprings }: any) => {
-  const { layoutManager, scrollAxis, throttleAmount } = useParallaxApi();
-  const { sectionId } = useSection();
+  const container = useScrollContainer();
+  const section = useSection();
   const scroll = useScroll();
+
+  if (!section) {
+    throw new Error('Springs can only be used inside of a Scroll.Section');
+  }
+
+  if (container === null) {
+    throw new Error('Springs can only be used within a Scroll.Container');
+  }
+
+  const { layoutManager, scrollAxis, throttleAmount } = container;
 
   // section dependencies include section and container rects
   const animations = useMemo(() => {
     const keyframesMap = processKeyframes(
       keyframes,
       layoutManager.layout,
-      sectionId,
+      section.sectionId,
       data
     );
     return {
@@ -342,24 +352,28 @@ const Springs = ({ keyframes, springConfigs, data, onSprings }: any) => {
   return null;
 };
 
-export interface ParallaxItemProps extends HTMLMotionProps<'div'> {
+export interface ScrollItemProps extends HTMLMotionProps<'div'> {
   keyframes?: Keyframes;
   springs?: SpringConfigs;
   data?: any;
 }
 
-const Item: FC<ParallaxItemProps> = ({
+const Item: FC<ScrollItemProps> = ({
   keyframes = {},
   springs: springConfigs = {},
   data,
   ...otherProps
 }) => {
   const [springs, setSprings] = useState<Record<string, MotionValue>>({});
-  const { isReady } = useSection();
+  const section = useSection();
+
+  if (!section) {
+    throw new Error('Scroll.Item can only be used within a Scroll.Section');
+  }
 
   return (
     <>
-      {isReady && (
+      {section.isReady && (
         <Springs
           keyframes={keyframes}
           springConfigs={springConfigs}

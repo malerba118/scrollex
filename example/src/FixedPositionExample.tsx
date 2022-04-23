@@ -1,8 +1,8 @@
-import { Parallax, Keyframes } from 'scrollex';
+import { Scroll, Keyframes } from 'scrollex';
 import { Center, chakra, Img } from '@chakra-ui/react';
 
-const ParallaxItem = chakra(Parallax.Item);
-const ParallaxSection = chakra(Parallax.Section);
+const ScrollItem = chakra(Scroll.Item);
+const ScrollSection = chakra(Scroll.Section);
 
 const keyframes: Record<string, Keyframes> = {
   image: ({ section, container, scrollMax }) => ({
@@ -47,17 +47,17 @@ const images = [
 
 export default function App() {
   return (
-    <Parallax.Container scrollAxis="y" height="100vh" width="100vw">
+    <Scroll.Container scrollAxis="y" height="100vh" width="100vw">
       {images.map((image) => {
         return (
-          <ParallaxSection key={image} height="100vh">
+          <ScrollSection key={image} height="100vh">
             <Center
               pos="fixed"
               inset={0}
               pointerEvents="none"
               style={{ perspective: 600 }}
             >
-              <ParallaxItem keyframes={keyframes.image} overflow="hidden">
+              <ScrollItem keyframes={keyframes.image} overflow="hidden">
                 <Img
                   key={image}
                   src={image}
@@ -65,11 +65,11 @@ export default function App() {
                   w="200px"
                   objectFit="cover"
                 />
-              </ParallaxItem>
+              </ScrollItem>
             </Center>
-          </ParallaxSection>
+          </ScrollSection>
         );
       })}
-    </Parallax.Container>
+    </Scroll.Container>
   );
 }

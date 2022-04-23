@@ -17,7 +17,6 @@ ReactDOM.render(
         <Routes>
           <Route path="fixed-position" element={<FixedPositionExample />} />
           <Route path="sticky-position" element={<StickyPositionExample />} />
-
           <Route path="styled-sections" element={<StyledSectionsExample />} />
           <Route path="horizontal" element={<HorizontalExample />} />
         </Routes>
