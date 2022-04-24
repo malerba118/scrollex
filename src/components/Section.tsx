@@ -81,8 +81,10 @@ const Section: FC<ScrollSectionProps> = ({
     const classes = [className];
     if (scrollAxis === 'x') {
       classes.push(styles.heightFull);
+      classes.push(styles.inlineBlock);
     } else {
       classes.push(styles.widthFull);
+      classes.push(styles.block);
     }
     return classes.join(' ');
   }, [scrollAxis, className]);
@@ -97,7 +99,6 @@ const Section: FC<ScrollSectionProps> = ({
           position: 'relative',
           visibility: isReady ? 'visible' : 'hidden',
           overflow: showOverflow ? 'visible' : 'hidden',
-          display: scrollAxis === 'y' ? 'block' : 'inline-block',
           whiteSpace: 'normal',
           ...otherProps.style,
         }}

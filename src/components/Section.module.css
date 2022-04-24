@@ -5,3 +5,11 @@
 .widthFull {
   width: 100%;
 }
+
+.block {
+  display: block;
+}
+
+.inlineBlock {
+  display: inline-block;
+}

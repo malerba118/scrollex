@@ -7,7 +7,7 @@ const ScrollSection = chakra(Scroll.Section);
 const ScrollContainer = chakra(Scroll.Container);
 
 const keyframes: Record<string, Keyframes> = {
-  heading: ({ section, scrollMax }) => ({
+  heading: ({ section, maxScrollPosition }) => ({
     [section.leftAt('container-left')]: {
       rotateZ: 0,
       translateY: 0,

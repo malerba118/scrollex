@@ -8,7 +8,7 @@ interface UseScrollLayoutManagerParams {
 export interface Layout {
   sections: Record<string, Rect>;
   container: Rect;
-  scrollMax: number;
+  maxScrollPosition: number;
 }
 
 export interface LayoutManager {
@@ -45,7 +45,7 @@ const useScrollLayoutManager = ({
     [setSections]
   );
 
-  const scrollMax = useMemo(() => {
+  const maxScrollPosition = useMemo(() => {
     let total = 0;
     if (scrollAxis === 'y') {
       Object.values(sections).forEach((rect) => {
@@ -66,12 +66,12 @@ const useScrollLayoutManager = ({
       layout: {
         sections,
         container,
-        scrollMax,
+        maxScrollPosition,
       },
       setContainerRect,
       setSectionRect,
     }),
-    [setContainerRect, setSectionRect, sections, container, scrollMax]
+    [setContainerRect, setSectionRect, sections, container, maxScrollPosition]
   );
 };
 

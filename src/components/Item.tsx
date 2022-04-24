@@ -31,7 +31,7 @@ export type StyleObj = {
 export type KeyframesContext = {
   section: LayoutSection;
   container: LayoutContainer;
-  scrollMax: number;
+  maxScrollPosition: number;
   data?: any;
 };
 
@@ -91,12 +91,12 @@ const getKeyframesContext = (
     layout.container
   );
   const container = new LayoutContainer(layout.container);
-  const scrollMax = layout.scrollMax;
+  const maxScrollPosition = layout.maxScrollPosition;
 
   return {
     section,
     container,
-    scrollMax,
+    maxScrollPosition,
     data,
   };
 };
@@ -118,7 +118,7 @@ const processKeyframes = (
   );
   const map = new Map<number, StyleObj>();
   offsets.forEach((offset) => {
-    map.set(Number(offset) / layout.scrollMax, keyframesObj[offset]);
+    map.set(Number(offset) / layout.maxScrollPosition, keyframesObj[offset]);
   });
   return map;
 };
@@ -311,7 +311,7 @@ const Springs = ({ keyframes, springConfigs, data, onSprings }: any) => {
   useEffect(() => {
     const updateSprings = throttle(
       (scrollOffset: number) => {
-        const progress = scrollOffset / layoutManager.layout.scrollMax;
+        const progress = scrollOffset / layoutManager.layout.maxScrollPosition;
         springs.translateX.set(animations.translateX?.get(progress) ?? '0');
         springs.translateY.set(animations.translateY?.get(progress) ?? '0');
         springs.translateZ.set(animations.translateZ?.get(progress) ?? '0');
@@ -342,7 +342,7 @@ const Springs = ({ keyframes, springConfigs, data, onSprings }: any) => {
     scroll.position.y,
     scroll.position.x,
     animations,
-    layoutManager.layout.scrollMax,
+    layoutManager.layout.maxScrollPosition,
   ]);
 
   useEffect(() => {
