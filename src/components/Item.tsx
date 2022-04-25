@@ -1,5 +1,5 @@
 import { HTMLMotionProps, motion, MotionValue, useSpring } from 'framer-motion';
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, forwardRef, useEffect, useMemo, useState } from 'react';
 import { useScrollContainer } from './Container';
 import { useSection } from './Section';
 import { useScroll } from '../hooks/useScroll';
@@ -10,7 +10,7 @@ import {
   Animation as PopmotionAnimation,
 } from 'popmotion';
 import throttle from 'lodash.throttle';
-import { LayoutSection, LayoutContainer } from '../utils';
+import { LayoutSection, LayoutContainer, assignRef } from '../utils';
 
 export type StyleObj = {
   scale?: number | string;
@@ -358,50 +358,53 @@ export interface ScrollItemProps extends HTMLMotionProps<'div'> {
   data?: any;
 }
 
-const Item: FC<ScrollItemProps> = ({
-  keyframes = {},
-  springs: springConfigs = {},
-  data,
-  ...otherProps
-}) => {
-  const [springs, setSprings] = useState<Record<string, MotionValue>>({});
-  const section = useSection();
+const Item = forwardRef<HTMLDivElement, ScrollItemProps>(
+  (
+    { keyframes = {}, springs: springConfigs = {}, data, ...otherProps },
+    forwardedRef
+  ) => {
+    const [springs, setSprings] = useState<Record<string, MotionValue>>({});
+    const section = useSection();
 
-  if (!section) {
-    throw new Error('Scroll.Item can only be used within a Scroll.Section');
-  }
+    if (!section) {
+      throw new Error('Scroll.Item can only be used within a Scroll.Section');
+    }
 
-  return (
-    <>
-      {section.isReady && (
-        <Springs
-          keyframes={keyframes}
-          springConfigs={springConfigs}
-          data={data}
-          onSprings={setSprings}
+    return (
+      <>
+        {section.isReady && (
+          <Springs
+            keyframes={keyframes}
+            springConfigs={springConfigs}
+            data={data}
+            onSprings={setSprings}
+          />
+        )}
+        <motion.div
+          {...otherProps}
+          ref={(el) => {
+            assignRef(forwardedRef, el);
+          }}
+          style={{
+            ...otherProps.style,
+            translateX: springs.translateX,
+            translateY: springs.translateY,
+            translateZ: springs.translateZ,
+            scale: springs.scale,
+            scaleX: springs.scaleX,
+            scaleY: springs.scaleY,
+            scaleZ: springs.scaleZ,
+            skewX: springs.skewX,
+            skewY: springs.skewY,
+            rotateX: springs.rotateX,
+            rotateY: springs.rotateY,
+            rotateZ: springs.rotateZ,
+            opacity: springs.opacity,
+          }}
         />
-      )}
-      <motion.div
-        {...otherProps}
-        style={{
-          ...otherProps.style,
-          translateX: springs.translateX,
-          translateY: springs.translateY,
-          translateZ: springs.translateZ,
-          scale: springs.scale,
-          scaleX: springs.scaleX,
-          scaleY: springs.scaleY,
-          scaleZ: springs.scaleZ,
-          skewX: springs.skewX,
-          skewY: springs.skewY,
-          rotateX: springs.rotateX,
-          rotateY: springs.rotateY,
-          rotateZ: springs.rotateZ,
-          opacity: springs.opacity,
-        }}
-      />
-    </>
-  );
-};
+      </>
+    );
+  }
+);
 
 export default Item;

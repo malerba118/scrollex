@@ -1,6 +1,6 @@
 import { Scroll, Keyframes } from 'scrollex';
 import { Center, chakra, Heading, Img } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 const ScrollItem = chakra(Scroll.Item);
 const ScrollSection = chakra(Scroll.Section);
@@ -27,14 +27,18 @@ const keyframes: Record<string, Keyframes> = {
 
 export default function App() {
   const [mass, setMass] = useState(2);
+  const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     setTimeout(() => {
       setMass(0.2);
     }, 10000);
   }, []);
+  useLayoutEffect(() => {
+    alert(ref.current?.offsetHeight);
+  }, []);
   return (
     <>
-      <ScrollContainer scrollAxis="x" h="100vh">
+      <ScrollContainer ref={ref} scrollAxis="x" h="100vh">
         <ScrollSection w="100vw" bg="blue.200" style={{ perspective: 500 }}>
           <ScrollItem display="inline-block" keyframes={keyframes.heading}>
             <Heading display="inline-block" size="4xl">

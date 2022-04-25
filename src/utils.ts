@@ -1,4 +1,27 @@
-import { Rect } from './types';
+import * as React from 'react';
+
+export type RefCallback<T> = (newValue: T | null) => void;
+export type RefObject<T> = React.MutableRefObject<T | null>;
+
+export type DefinedReactRef<T> = RefCallback<T> | RefObject<T>;
+export type ReactRef<T> = DefinedReactRef<T> | null;
+
+export function assignRef<T>(ref: ReactRef<T>, value: T | null): ReactRef<T> {
+  if (typeof ref === 'function') {
+    ref(value);
+  } else if (ref) {
+    ref.current = value;
+  }
+
+  return ref;
+}
+
+export interface Rect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 
 export const getRect = (el: HTMLElement): Rect => ({
   x: el.offsetLeft,

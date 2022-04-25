@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { Rect } from '../types';
+import { Rect } from '../utils';
 
 interface UseScrollLayoutManagerParams {
   scrollAxis: 'x' | 'y';

@@ -13,12 +13,14 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "framer-motion": ">6.0.0",
-    "react": ">17.0.0",
-    "react-dom": ">17.0.0"
+    "framer-motion": ">=6.0.0",
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^22.0.0",
     "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.2.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@types/file-saver": "^2.0.2",
@@ -43,7 +45,6 @@
   },
   "dependencies": {
     "lodash.throttle": "4.1.1",
-    "nanoid": "3.3.2",
     "popmotion": "11.0.3"
   },
   "prettier": {
@@ -59,9 +60,6 @@
     "branches": [
       "main"
     ]
-  },
-  "browser": {
-    "crypto": false
   },
   "publishConfig": {
     "access": "public"

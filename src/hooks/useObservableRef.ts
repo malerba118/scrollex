@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import useConst from './useConst';
 
 type Cleanup = (() => void) | void;
 type Subscriber<T> = (next: T) => Cleanup;
@@ -54,7 +55,7 @@ export class ObservableRef<T> {
 }
 
 const useObservableRef = <T>(defaultValue: T) => {
-  const [ref] = useState(() => new ObservableRef(defaultValue));
+  const ref = useConst(() => new ObservableRef(defaultValue));
   return ref;
 };
 
