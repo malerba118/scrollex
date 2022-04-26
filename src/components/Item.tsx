@@ -1,5 +1,5 @@
 import { HTMLMotionProps, motion, MotionValue, useSpring } from 'framer-motion';
-import React, { FC, forwardRef, useEffect, useMemo, useState } from 'react';
+import React, { forwardRef, useEffect, useMemo, useState } from 'react';
 import { useScrollContainer } from './Container';
 import { useSection } from './Section';
 import { useScroll } from '../hooks/useScroll';

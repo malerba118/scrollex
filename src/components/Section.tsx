@@ -1,12 +1,4 @@
-import React, {
-  createContext,
-  FC,
-  forwardRef,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { createContext, forwardRef, useContext, useMemo } from 'react';
 import useResizeObserver from '../hooks/useResizeObserver';
 import useObservableRef from '../hooks/useObservableRef';
 import { assignRef, getRect } from '../utils';
