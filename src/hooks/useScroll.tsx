@@ -1,9 +1,15 @@
 import React, { useMemo, createContext, useContext, forwardRef } from 'react';
-import { MotionValue, useElementScroll, useVelocity } from 'framer-motion';
+import {
+  HTMLMotionProps,
+  motion,
+  MotionValue,
+  useElementScroll,
+  useVelocity,
+} from 'framer-motion';
 
 const ScrollContext = createContext<ScrollValues | null>(null);
 
-interface ScrollProviderProps extends React.HTMLProps<HTMLDivElement> {}
+interface ScrollProviderProps extends HTMLMotionProps<'div'> {}
 
 interface ScrollValues {
   position: {
@@ -38,13 +44,13 @@ export const ScrollProvider = forwardRef<HTMLDivElement, ScrollProviderProps>(
 
     return (
       <ScrollContext.Provider value={scroll}>
-        <div
+        <motion.div
           {...otherProps}
           ref={ref}
           style={{ scrollBehavior: 'smooth', overflow: 'auto', ...style }}
         >
           {children}
-        </div>
+        </motion.div>
       </ScrollContext.Provider>
     );
   }

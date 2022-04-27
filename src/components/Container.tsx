@@ -1,7 +1,6 @@
 import React, {
   createContext,
   forwardRef,
-  HTMLProps,
   useContext,
   useLayoutEffect,
   useMemo,
@@ -13,6 +12,7 @@ import useResizeObserver from '../hooks/useResizeObserver';
 import useObservableRef from '../hooks/useObservableRef';
 import { ScrollProvider } from '../hooks/useScroll';
 import { assignRef, getRect } from '../utils';
+import { HTMLMotionProps } from 'framer-motion';
 
 export interface ScrollContainerApi {
   layoutManager: LayoutManager;
@@ -26,7 +26,7 @@ export const useScrollContainer = () => {
   return useContext(ScrollContainerContext);
 };
 
-export interface ScrollContainerProps extends HTMLProps<HTMLDivElement> {
+export interface ScrollContainerProps extends HTMLMotionProps<'div'> {
   scrollAxis?: 'x' | 'y';
   throttleAmount?: number;
 }
