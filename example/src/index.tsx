@@ -11,6 +11,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 // @ts-ignore
 import FPSStats from 'react-fps-stats';
 import theme from './theme';
+import { useScrollState } from '../../dist';
+import UseScrollStateExample from './UseScrollStateExample';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -22,6 +24,7 @@ ReactDOM.render(
           <Route path="sticky-position" element={<StickyPositionExample />} />
           <Route path="styled-sections" element={<StyledSectionsExample />} />
           <Route path="horizontal" element={<HorizontalExample />} />
+          <Route path="use-scroll-state" element={<UseScrollStateExample />} />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>

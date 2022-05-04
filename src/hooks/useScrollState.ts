@@ -39,7 +39,7 @@ const getScrollStateContext = (
   };
 };
 
-const useScrollState = <T extends number | string | null | undefined>(
+export const useScrollState = <T extends number | string | null | undefined>(
   callback: ScrollStateFn<T>
 ) => {
   const [state, setState] = useState<T>();
@@ -59,6 +59,9 @@ const useScrollState = <T extends number | string | null | undefined>(
   const { layoutManager, scrollAxis } = container;
 
   const maybeUpdateState = useCallback(() => {
+    if (!section.isReady) {
+      return;
+    }
     const position =
       scrollAxis === 'x' ? scroll.position.x.get() : scroll.position.y.get();
     const velocity =
@@ -72,7 +75,7 @@ const useScrollState = <T extends number | string | null | undefined>(
       )
     );
     setState(nextState);
-  }, [layoutManager.layout, section.sectionId, scrollAxis]);
+  }, [layoutManager.layout, section.sectionId, section.isReady, scrollAxis]);
 
   useEffect(() => {
     maybeUpdateState();
@@ -88,7 +91,7 @@ const useScrollState = <T extends number | string | null | undefined>(
         maybeUpdateState();
       });
     }
-  }, [scrollAxis]);
+  }, [scrollAxis, maybeUpdateState]);
 
   useEffect(() => {
     if (scrollAxis === 'x') {
@@ -100,7 +103,7 @@ const useScrollState = <T extends number | string | null | undefined>(
         maybeUpdateState();
       });
     }
-  }, [scrollAxis]);
+  }, [scrollAxis, maybeUpdateState]);
 
   return state;
 };
