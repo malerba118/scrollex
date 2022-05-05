@@ -2,6 +2,7 @@ import Container from './components/Container';
 import Section from './components/Section';
 import Item from './components/Item';
 import { useScrollState } from './hooks/useScrollState';
+import { useScrollValue } from './hooks/useScrollValue';
 export type { ScrollContainerProps } from './components/Container';
 export type { ScrollSectionProps } from './components/Section';
 export type {
@@ -18,4 +19,4 @@ export const Scroll = {
   Section,
   Item,
 };
-export { useScrollState };
+export { useScrollState, useScrollValue };

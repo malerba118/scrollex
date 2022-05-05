@@ -1,3 +1,4 @@
+import { MotionValue, useMotionValue } from 'framer-motion';
 import { useCallback, useEffect, useState } from 'react';
 import { useScrollContainer } from '../components/Container';
 import { useSection } from '../components/Section';
@@ -6,23 +7,23 @@ import useLatestRef from './useLatestRef';
 import { useScroll } from './useScroll';
 import { Layout } from './useScrollLayoutManager';
 
-type ScrollStateContext = {
+type ScrollValueContext = {
   section: LayoutSection;
   container: LayoutContainer;
   maxScrollPosition: number;
   position: number;
   velocity: number;
 };
-type ScrollStateFn<T extends number | string | null | undefined> = (
-  context: ScrollStateContext
+type ScrollValueFn<T extends number | string | null | undefined> = (
+  context: ScrollValueContext
 ) => T;
 
-const getScrollStateContext = (
+const getScrollValueContext = (
   layout: Layout,
   sectionId: string,
   position: number,
   velocity: number
-): ScrollStateContext => {
+): ScrollValueContext => {
   const section = new LayoutSection(
     layout.sections[sectionId],
     layout.container
@@ -39,10 +40,10 @@ const getScrollStateContext = (
   };
 };
 
-export const useScrollState = <T extends number | string | null | undefined>(
-  callback: ScrollStateFn<T>
+export const useScrollValue = <T extends number | string>(
+  callback: ScrollValueFn<T>
 ) => {
-  const [state, setState] = useState<T>();
+  const value = useMotionValue<T | undefined>(undefined);
   const container = useScrollContainer();
   const section = useSection();
   const scroll = useScroll();
@@ -58,7 +59,7 @@ export const useScrollState = <T extends number | string | null | undefined>(
 
   const { layoutManager, scrollAxis } = container;
 
-  const maybeUpdateState = useLatestRef(() => {
+  const maybeUpdateValue = useLatestRef(() => {
     if (!section.isReady) {
       return;
     }
@@ -66,30 +67,29 @@ export const useScrollState = <T extends number | string | null | undefined>(
       scrollAxis === 'x' ? scroll.position.x.get() : scroll.position.y.get();
     const velocity =
       scrollAxis === 'x' ? scroll.velocity.x.get() : scroll.velocity.y.get();
-
-    const nextState = callback(
-      getScrollStateContext(
+    const nextValue = callback(
+      getScrollValueContext(
         layoutManager.layout,
         section.sectionId,
         position,
         velocity
       )
     );
-    setState(nextState);
+    value.set(nextValue);
   });
 
   useEffect(() => {
-    maybeUpdateState.current();
+    maybeUpdateValue.current();
   }, [layoutManager.layout, section.sectionId, section.isReady, scrollAxis]);
 
   useEffect(() => {
     if (scrollAxis === 'x') {
       return scroll.position.x.onChange(() => {
-        maybeUpdateState.current();
+        maybeUpdateValue.current();
       });
     } else {
       return scroll.position.y.onChange(() => {
-        maybeUpdateState.current();
+        maybeUpdateValue.current();
       });
     }
   }, [scrollAxis]);
@@ -97,14 +97,14 @@ export const useScrollState = <T extends number | string | null | undefined>(
   useEffect(() => {
     if (scrollAxis === 'x') {
       return scroll.velocity.x.onChange(() => {
-        maybeUpdateState.current();
+        maybeUpdateValue.current();
       });
     } else {
       return scroll.velocity.y.onChange(() => {
-        maybeUpdateState.current();
+        maybeUpdateValue.current();
       });
     }
   }, [scrollAxis]);
 
-  return state;
+  return value;
 };

@@ -13,6 +13,7 @@ import FPSStats from 'react-fps-stats';
 import theme from './theme';
 import { useScrollState } from '../../dist';
 import UseScrollStateExample from './UseScrollStateExample';
+import UseScrollValueExample from './UseScrollValueExample';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -25,6 +26,7 @@ ReactDOM.render(
           <Route path="styled-sections" element={<StyledSectionsExample />} />
           <Route path="horizontal" element={<HorizontalExample />} />
           <Route path="use-scroll-state" element={<UseScrollStateExample />} />
+          <Route path="use-scroll-value" element={<UseScrollValueExample />} />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>
