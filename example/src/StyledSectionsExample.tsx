@@ -11,9 +11,13 @@ const keyframes: Record<string, Keyframes> = {
       rotateZ: 0,
       translateY: 0,
     },
-    [section.bottomAt('container-top')]: {
+    [section.bottomAt('container-top') - 110]: {
+      color: 'rgba(255,0,255,1)',
+    },
+    [section.bottomAt('container-top') - 100]: {
       rotateZ: 180,
-      translateY: section.height,
+      translateY: section.height - 150,
+      color: 'rgba(255,0,0,1)',
     },
   }),
   single: ({ section }) => ({
@@ -25,7 +29,7 @@ const keyframes: Record<string, Keyframes> = {
 
 export default function App() {
   return (
-    <ScrollContainer scrollAxis="y" height="100vh" throttleAmount={2000}>
+    <ScrollContainer scrollAxis="y" height="100vh" throttleAmount={0}>
       <ScrollSection height="300px">
         <ScrollItem>
           <Heading size="4xl">Yo</Heading>
@@ -43,7 +47,11 @@ export default function App() {
         p="25px"
         border="25px solid red"
       >
-        <ScrollItem keyframes={keyframes.heading} display="inline-block">
+        <ScrollItem
+          color="orange"
+          keyframes={keyframes.heading}
+          display="inline-block"
+        >
           <Heading display="inline-block" size="4xl">
             Up
           </Heading>
