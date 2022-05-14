@@ -26,6 +26,8 @@ export type StyleObj = {
   skewX?: number | string;
   skewY?: number | string;
   opacity?: number | string;
+  backgroundColor?: string;
+  color?: string;
 };
 
 export type KeyframesContext = {
@@ -137,6 +139,8 @@ export type SpringConfigs = {
   skewX?: SpringOptions;
   skewY?: SpringOptions;
   opacity?: SpringOptions;
+  backgroundColor?: SpringOptions;
+  color?: SpringOptions;
 };
 
 const DEFAULT_SPRING_CONFIGS: SpringConfigs = {
@@ -206,6 +210,16 @@ const DEFAULT_SPRING_CONFIGS: SpringConfigs = {
     mass: 0.1,
     damping: 20,
   },
+  backgroundColor: {
+    mass: 0.05,
+    damping: 7.5,
+    stiffness: 100,
+  },
+  color: {
+    mass: 0.05,
+    damping: 7.5,
+    stiffness: 100,
+  },
 };
 
 const Springs = ({ keyframes, springConfigs, data, onSprings }: any) => {
@@ -245,6 +259,8 @@ const Springs = ({ keyframes, springConfigs, data, onSprings }: any) => {
       rotateY: getAnimationForProperty('rotateY', keyframesMap),
       rotateZ: getAnimationForProperty('rotateZ', keyframesMap),
       opacity: getAnimationForProperty('opacity', keyframesMap),
+      backgroundColor: getAnimationForProperty('backgroundColor', keyframesMap),
+      color: getAnimationForProperty('color', keyframesMap),
     };
   }, [layoutManager.layout, keyframes, JSON.stringify(data)]);
 
@@ -306,6 +322,14 @@ const Springs = ({ keyframes, springConfigs, data, onSprings }: any) => {
       animations.opacity?.get(0) ?? '1',
       mergedSpringConfigs.opacity
     ),
+    backgroundColor: useSpring(
+      animations.backgroundColor?.get(0) ?? undefined,
+      mergedSpringConfigs.backgroundColor
+    ),
+    color: useSpring(
+      animations.color?.get(0) ?? undefined,
+      mergedSpringConfigs.color
+    ),
   };
 
   useEffect(() => {
@@ -325,6 +349,10 @@ const Springs = ({ keyframes, springConfigs, data, onSprings }: any) => {
         springs.rotateY.set(animations.rotateY?.get(progress) ?? '0');
         springs.rotateZ.set(animations.rotateZ?.get(progress) ?? '0');
         springs.opacity.set(animations.opacity?.get(progress) ?? '1');
+        springs.backgroundColor.set(
+          animations.backgroundColor?.get(progress) ?? undefined
+        );
+        springs.color.set(animations.color?.get(progress) ?? undefined);
       },
       throttleAmount,
       { leading: true, trailing: true }
@@ -400,6 +428,8 @@ const Item = forwardRef<HTMLDivElement, ScrollItemProps>(
             rotateY: springs.rotateY,
             rotateZ: springs.rotateZ,
             opacity: springs.opacity,
+            backgroundColor: springs.backgroundColor,
+            color: springs.color,
           }}
         />
       </>
