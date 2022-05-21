@@ -1,5 +1,5 @@
-import { MotionValue, useMotionValue } from 'framer-motion';
-import { useCallback, useEffect, useState } from 'react';
+import { useMotionValue } from 'framer-motion';
+import { useEffect } from 'react';
 import { useScrollContainer } from '../components/Container';
 import { useSection } from '../components/Section';
 import { LayoutContainer, LayoutSection } from '../utils';
@@ -7,14 +7,14 @@ import useLatestRef from './useLatestRef';
 import { useScroll } from './useScroll';
 import { Layout } from './useScrollLayoutManager';
 
-type ScrollValueContext = {
+export type ScrollValueContext = {
   section: LayoutSection;
   container: LayoutContainer;
   maxScrollPosition: number;
   position: number;
   velocity: number;
 };
-type ScrollValueFn<T extends number | string | null | undefined> = (
+export type ScrollValueFn<T extends number | string> = (
   context: ScrollValueContext
 ) => T;
 
@@ -47,14 +47,17 @@ export const useScrollValue = <T extends number | string>(
   const container = useScrollContainer();
   const section = useSection();
   const scroll = useScroll();
-  // const callbackRef = useLatestRef(callback);
 
   if (section === null) {
-    throw new Error('Springs can only be used inside of a Scroll.Section');
+    throw new Error(
+      'useScrollValue can only be used inside of a Scroll.Section'
+    );
   }
 
   if (container === null) {
-    throw new Error('Springs can only be used within a Scroll.Container');
+    throw new Error(
+      'useScrollValue can only be used within a Scroll.Container'
+    );
   }
 
   const { layoutManager, scrollAxis } = container;

@@ -1,6 +1,6 @@
 import { Scroll, useScrollState, useScrollValue } from 'scrollex';
 import { Box, Center, chakra } from '@chakra-ui/react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const MotionBox = motion(Box);
 const ScrollSection = chakra(Scroll.Section);
