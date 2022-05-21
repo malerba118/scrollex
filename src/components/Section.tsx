@@ -54,10 +54,14 @@ const Section = forwardRef<HTMLDivElement, ScrollSectionProps>(
       );
     });
 
+    // Definitely not the best check, but should suffice for determining
+    // whether the first layout measurement has happened.
     const isReady =
       !!layoutManager.layout.sections[sectionId] &&
       layoutManager.layout.container.width !== 0 &&
-      layoutManager.layout.container.height !== 0;
+      layoutManager.layout.container.height !== 0 &&
+      layoutManager.layout.content.width !== 0 &&
+      layoutManager.layout.content.height !== 0;
 
     const context = useMemo(
       () => ({

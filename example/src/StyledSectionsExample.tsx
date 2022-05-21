@@ -22,7 +22,7 @@ const keyframes: Record<string, Keyframes> = {
     },
   }),
   questionMark: ({ section, container, maxScrollPosition }) => ({
-    [0]: {
+    [maxScrollPosition - 100]: {
       rotateZ: 0,
     },
     [maxScrollPosition]: {
@@ -74,12 +74,12 @@ export default function App() {
           <Heading size="4xl">Going</Heading>
         </ScrollItem>
       </ScrollSection>
-      <ScrollSection h="300px">
+      <Box h="500vh" />
+      <ScrollSection showOverflow h="300px">
         <ScrollItem keyframes={keyframes.questionMark}>
           <Heading size="4xl">?</Heading>
         </ScrollItem>
       </ScrollSection>
-      <Box h="500vh" />
     </ScrollContainer>
   );
 }

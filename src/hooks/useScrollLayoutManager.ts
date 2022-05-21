@@ -8,12 +8,14 @@ interface UseScrollLayoutManagerParams {
 export interface Layout {
   sections: Record<string, Rect>;
   container: Rect;
+  content: Rect;
   maxScrollPosition: number;
 }
 
 export interface LayoutManager {
   layout: Layout;
   setContainerRect: (rect: Rect) => void;
+  setContentRect: (rect: Rect) => void;
   setSectionRect: (sectionId: string, rect: Rect) => void;
 }
 
@@ -21,6 +23,12 @@ const useScrollLayoutManager = ({
   scrollAxis,
 }: UseScrollLayoutManagerParams): LayoutManager => {
   let [container, setContainer] = useState<Rect>({
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+  });
+  let [content, setContent] = useState<Rect>({
     x: 0,
     y: 0,
     width: 0,
@@ -35,6 +43,13 @@ const useScrollLayoutManager = ({
     [setContainer]
   );
 
+  const setContentRect = useCallback(
+    (rect: Rect) => {
+      setContent(rect);
+    },
+    [setContent]
+  );
+
   const setSectionRect = useCallback(
     (sectionId: string, rect: Rect) => {
       setSections((prev) => ({
@@ -45,33 +60,50 @@ const useScrollLayoutManager = ({
     [setSections]
   );
 
+  // const maxScrollPosition = useMemo(() => {
+  //   let total = 0;
+  //   if (scrollAxis === 'y') {
+  //     Object.values(sections).forEach((rect) => {
+  //       total += rect.height;
+  //     });
+  //     total -= container.height;
+  //   } else {
+  //     Object.values(sections).forEach((rect) => {
+  //       total += rect.width;
+  //     });
+  //     total -= container.width;
+  //   }
+  //   return total;
+  // }, [container, sections, scrollAxis]);
+
   const maxScrollPosition = useMemo(() => {
-    let total = 0;
     if (scrollAxis === 'y') {
-      Object.values(sections).forEach((rect) => {
-        total += rect.height;
-      });
-      total -= container.height;
+      return content.height - container.height;
     } else {
-      Object.values(sections).forEach((rect) => {
-        total += rect.width;
-      });
-      total -= container.width;
+      return content.width - container.width;
     }
-    return total;
-  }, [container, sections, scrollAxis]);
+  }, [container, content, scrollAxis]);
 
   return useMemo(
     () => ({
       layout: {
         sections,
         container,
+        content,
         maxScrollPosition,
       },
       setContainerRect,
+      setContentRect,
       setSectionRect,
     }),
-    [setContainerRect, setSectionRect, sections, container, maxScrollPosition]
+    [
+      setContainerRect,
+      setSectionRect,
+      sections,
+      container,
+      content,
+      maxScrollPosition,
+    ]
   );
 };
 
