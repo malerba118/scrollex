@@ -9,9 +9,11 @@ const keyframes: Record<string, Keyframes> = {
   headerText: ({ section }) => ({
     [section.topAt('container-top')]: {
       translateY: 0,
+      backgroundColor: '#ff00ff',
     },
     [section.bottomAt('container-top')]: {
       translateY: 200,
+      backgroundColor: 'rgba(255,0,0,1)',
     },
   }),
   headerImage: ({ section }) => ({
