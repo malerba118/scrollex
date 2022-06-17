@@ -46,6 +46,7 @@ const Container = forwardRef<HTMLDivElement, ScrollContainerProps>(
 
     useResizeObserver(contentRef, (entry) => {
       layoutManager.setContentRect(getRect(entry.target as HTMLElement));
+      console.log(getRect(entry.target as HTMLElement));
     });
 
     useLayoutEffect(() => {
@@ -78,8 +79,13 @@ const Container = forwardRef<HTMLDivElement, ScrollContainerProps>(
         >
           <div
             style={{
+              position: 'relative',
               width: scrollAxis === 'x' ? 'auto' : '100%',
               height: scrollAxis === 'x' ? '100%' : 'auto',
+              // required to allow fixed position content (permits scroll events to propagate to container)
+              clipPath: 'inset(0 0 0 0)',
+              // required to prevent actively animating content from increasing the scroll height
+              overflow: 'clip',
             }}
             ref={contentRef}
           >

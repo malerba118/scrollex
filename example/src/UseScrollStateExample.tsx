@@ -70,7 +70,7 @@ export default function UseScrollStateExample() {
         bg="blackAlpha.900"
         opacity={0.97}
       ></ScrollSection> */}
-      <ScrollSection showOverflow h="500vh">
+      <ScrollSection h="500vh">
         <Box pos="sticky" top={0} h="100vh" bg="blackAlpha.900">
           <MenuPage />
         </Box>

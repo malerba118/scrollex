@@ -28,9 +28,11 @@ const keyframes: Record<string, Keyframes> = {
   questionMark: ({ section, container, maxScrollPosition }) => ({
     [maxScrollPosition - 100]: {
       rotateZ: 0,
+      translateY: 0,
     },
     [maxScrollPosition]: {
       rotateZ: 180,
+      translateY: 1000,
     },
   }),
 };
@@ -38,6 +40,12 @@ const keyframes: Record<string, Keyframes> = {
 export default function App() {
   return (
     <ScrollContainer scrollAxis="y" height="100vh" throttleAmount={0}>
+      <ScrollSection
+        pos="absolute"
+        inset={0}
+        bg="red.100"
+        zIndex={-1}
+      ></ScrollSection>
       <ScrollSection height="300px">
         <ScrollItem>
           <Heading size="4xl">Yo</Heading>
@@ -83,7 +91,7 @@ export default function App() {
         </ScrollItem>
       </ScrollSection>
       <Box h="500vh" />
-      <ScrollSection showOverflow h="300px">
+      <ScrollSection h="300px">
         <ScrollItem keyframes={keyframes.questionMark}>
           <Heading size="4xl">?</Heading>
         </ScrollItem>

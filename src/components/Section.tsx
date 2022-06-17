@@ -19,15 +19,10 @@ export const useSection = () => {
   return useContext(SectionContext);
 };
 
-export interface ScrollSectionProps extends HTMLMotionProps<'div'> {
-  showOverflow?: boolean;
-}
+export interface ScrollSectionProps extends HTMLMotionProps<'div'> {}
 
 const Section = forwardRef<HTMLDivElement, ScrollSectionProps>(
-  (
-    { showOverflow = false, children, className, ...otherProps },
-    forwardedRef
-  ) => {
+  ({ children, className, ...otherProps }, forwardedRef) => {
     const sectionRef = useObservableRef<HTMLDivElement | null>(null);
     const sectionId = useId();
     const container = useScrollContainer();
@@ -73,7 +68,7 @@ const Section = forwardRef<HTMLDivElement, ScrollSectionProps>(
 
     // Using classes here to keep specificity low so user can override
     const _className = useMemo(() => {
-      const classes = [className];
+      const classes = [styles.relative, styles.whiteSpaceNormal, className];
       if (scrollAxis === 'x') {
         classes.push(styles.heightFull);
         classes.push(styles.inlineBlock);
@@ -94,10 +89,7 @@ const Section = forwardRef<HTMLDivElement, ScrollSectionProps>(
           }}
           className={_className}
           style={{
-            position: 'relative',
             visibility: isReady ? 'visible' : 'hidden',
-            overflow: showOverflow ? 'visible' : 'hidden',
-            whiteSpace: 'normal',
             ...otherProps.style,
           }}
         >

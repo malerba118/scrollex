@@ -99,7 +99,7 @@ export default function App() {
           </ScrollItem>
         </Center>
       </ScrollSection>
-      <ScrollSection showOverflow height="500vh">
+      <ScrollSection height="500vh">
         <Box
           pos="sticky"
           top={0}

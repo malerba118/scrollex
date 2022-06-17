@@ -13,3 +13,11 @@
 .inlineBlock {
   display: inline-block;
 }
+
+.relative {
+  position: 'relative';
+}
+
+.whiteSpaceNormal {
+  white-space: 'normal';
+}

@@ -41,7 +41,7 @@ const ScrollyBox = () => {
 export default function UseScrollStateExample() {
   return (
     <ScrollContainer scrollAxis="y" h="100vh">
-      <ScrollSection showOverflow h="500vh">
+      <ScrollSection h="500vh">
         <Center pos="sticky" top={0} h="100vh" bg="blackAlpha.900">
           <ScrollyBox />
         </Center>
