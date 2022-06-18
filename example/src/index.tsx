@@ -5,12 +5,16 @@ import FixedPositionExample from './FixedPositionExample';
 import StickyPositionExample from './StickyPositionExample';
 import StyledSectionsExample from './StyledSectionsExample';
 import HorizontalExample from './HorizontalExample';
+import HorizontalTwoExample from './HorizontalTwoExample';
 import reportWebVitals from './reportWebVitals';
 import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 // @ts-ignore
 import FPSStats from 'react-fps-stats';
 import theme from './theme';
+import { useScrollState } from '../../dist';
+import UseScrollStateExample from './UseScrollStateExample';
+import UseScrollValueExample from './UseScrollValueExample';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -22,6 +26,9 @@ ReactDOM.render(
           <Route path="sticky-position" element={<StickyPositionExample />} />
           <Route path="styled-sections" element={<StyledSectionsExample />} />
           <Route path="horizontal" element={<HorizontalExample />} />
+          <Route path="horizontal-two" element={<HorizontalTwoExample />} />
+          <Route path="use-scroll-state" element={<UseScrollStateExample />} />
+          <Route path="use-scroll-value" element={<UseScrollValueExample />} />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>

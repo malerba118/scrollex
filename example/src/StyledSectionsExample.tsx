@@ -1,5 +1,5 @@
 import { Scroll, Keyframes } from 'scrollex';
-import { Center, chakra, Heading, Img } from '@chakra-ui/react';
+import { Box, chakra, Heading, Img } from '@chakra-ui/react';
 
 const ScrollItem = chakra(Scroll.Item);
 const ScrollSection = chakra(Scroll.Section);
@@ -25,11 +25,27 @@ const keyframes: Record<string, Keyframes> = {
       translateX: 300,
     },
   }),
+  questionMark: ({ section, container, maxScrollPosition }) => ({
+    [maxScrollPosition - 100]: {
+      rotateZ: 0,
+      translateY: 0,
+    },
+    [maxScrollPosition]: {
+      rotateZ: 180,
+      translateY: 1000,
+    },
+  }),
 };
 
 export default function App() {
   return (
     <ScrollContainer scrollAxis="y" height="100vh" throttleAmount={0}>
+      <ScrollSection
+        pos="absolute"
+        inset={0}
+        bg="red.100"
+        zIndex={-1}
+      ></ScrollSection>
       <ScrollSection height="300px">
         <ScrollItem>
           <Heading size="4xl">Yo</Heading>
@@ -74,8 +90,9 @@ export default function App() {
           <Heading size="4xl">Going</Heading>
         </ScrollItem>
       </ScrollSection>
+      <Box h="500vh" />
       <ScrollSection h="300px">
-        <ScrollItem>
+        <ScrollItem keyframes={keyframes.questionMark}>
           <Heading size="4xl">?</Heading>
         </ScrollItem>
       </ScrollSection>

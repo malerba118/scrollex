@@ -15,7 +15,7 @@
     "@types/node": "^16.11.20",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
-    "framer-motion": "^6.3.0",
+    "framer-motion": "file:../node_modules/framer-motion",
     "react": "file:../node_modules/react",
     "react-dom": "file:../node_modules/react-dom",
     "react-fps-stats": "^0.2.3",

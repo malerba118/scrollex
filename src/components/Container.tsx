@@ -37,10 +37,15 @@ const Container = forwardRef<HTMLDivElement, ScrollContainerProps>(
     forwardedRef
   ) => {
     const containerRef = useObservableRef<HTMLDivElement | null>(null);
+    const contentRef = useObservableRef<HTMLDivElement | null>(null);
     const layoutManager = useScrollLayoutManager({ scrollAxis });
 
     useResizeObserver(containerRef, (entry) => {
       layoutManager.setContainerRect(getRect(entry.target as HTMLElement));
+    });
+
+    useResizeObserver(contentRef, (entry) => {
+      layoutManager.setContentRect(getRect(entry.target as HTMLElement));
     });
 
     useLayoutEffect(() => {
@@ -64,14 +69,27 @@ const Container = forwardRef<HTMLDivElement, ScrollContainerProps>(
           {...otherProps}
           style={{
             position: 'relative',
-            whiteSpace: 'nowrap',
             overflowX: scrollAxis === 'x' ? 'auto' : 'hidden',
             overflowY: scrollAxis === 'y' ? 'auto' : 'hidden',
             ...otherProps.style,
           }}
           ref={containerRef}
         >
-          {children}
+          <div
+            style={{
+              position: 'relative',
+              width: scrollAxis === 'x' ? 'max-content' : '100%',
+              height: scrollAxis === 'x' ? '100%' : 'auto',
+              display: scrollAxis === 'x' ? 'flex' : 'block',
+              // required to allow fixed position content (permits scroll events to propagate to container)
+              clipPath: 'inset(0 0 0 0)',
+              // required to prevent actively animating content from increasing the scroll height
+              overflow: 'clip',
+            }}
+            ref={contentRef}
+          >
+            {children}
+          </div>
         </ScrollProvider>
       </ScrollContainerContext.Provider>
     );

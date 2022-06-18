@@ -6,10 +6,6 @@
   width: 100%;
 }
 
-.block {
-  display: block;
-}
-
-.inlineBlock {
-  display: inline-block;
+.relative {
+  position: 'relative';
 }
