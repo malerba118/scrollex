@@ -51,9 +51,7 @@ export const useScrollState = <
   const scroll = useScroll();
 
   if (section === null) {
-    throw new Error(
-      'useScrollState can only be used inside of a Scroll.Section'
-    );
+    throw new Error('useScrollState can only be used within a Scroll.Section');
   }
 
   if (container === null) {

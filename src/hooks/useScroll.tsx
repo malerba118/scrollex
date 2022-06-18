@@ -107,7 +107,7 @@ export const ScrollProvider = forwardRef<HTMLDivElement, ScrollProviderProps>(
 export const useScroll = () => {
   const context = useContext(ScrollContext);
   if (context === null) {
-    throw new Error('useScroll must be used inside of a ScrollProvider');
+    throw new Error('useScroll must be used within a ScrollProvider');
   } else {
     return context;
   }

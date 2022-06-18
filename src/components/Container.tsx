@@ -46,7 +46,6 @@ const Container = forwardRef<HTMLDivElement, ScrollContainerProps>(
 
     useResizeObserver(contentRef, (entry) => {
       layoutManager.setContentRect(getRect(entry.target as HTMLElement));
-      console.log(getRect(entry.target as HTMLElement));
     });
 
     useLayoutEffect(() => {
@@ -70,7 +69,6 @@ const Container = forwardRef<HTMLDivElement, ScrollContainerProps>(
           {...otherProps}
           style={{
             position: 'relative',
-            // whiteSpace: scrollAxis === 'x' ? 'nowrap' : 'normal',
             overflowX: scrollAxis === 'x' ? 'auto' : 'hidden',
             overflowY: scrollAxis === 'y' ? 'auto' : 'hidden',
             ...otherProps.style,

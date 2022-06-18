@@ -228,7 +228,7 @@ const Springs = ({ keyframes, springConfigs, data, onSprings }: any) => {
   const scroll = useScroll();
 
   if (!section) {
-    throw new Error('Springs can only be used inside of a Scroll.Section');
+    throw new Error('Springs can only be used within a Scroll.Section');
   }
 
   if (container === null) {

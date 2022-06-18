@@ -60,22 +60,6 @@ const useScrollLayoutManager = ({
     [setSections]
   );
 
-  // const maxScrollPosition = useMemo(() => {
-  //   let total = 0;
-  //   if (scrollAxis === 'y') {
-  //     Object.values(sections).forEach((rect) => {
-  //       total += rect.height;
-  //     });
-  //     total -= container.height;
-  //   } else {
-  //     Object.values(sections).forEach((rect) => {
-  //       total += rect.width;
-  //     });
-  //     total -= container.width;
-  //   }
-  //   return total;
-  // }, [container, sections, scrollAxis]);
-
   const maxScrollPosition = useMemo(() => {
     if (scrollAxis === 'y') {
       return content.height - container.height;
