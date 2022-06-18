@@ -70,7 +70,7 @@ const Container = forwardRef<HTMLDivElement, ScrollContainerProps>(
           {...otherProps}
           style={{
             position: 'relative',
-            whiteSpace: scrollAxis === 'x' ? 'nowrap' : 'normal',
+            // whiteSpace: scrollAxis === 'x' ? 'nowrap' : 'normal',
             overflowX: scrollAxis === 'x' ? 'auto' : 'hidden',
             overflowY: scrollAxis === 'y' ? 'auto' : 'hidden',
             ...otherProps.style,
@@ -80,8 +80,9 @@ const Container = forwardRef<HTMLDivElement, ScrollContainerProps>(
           <div
             style={{
               position: 'relative',
-              width: scrollAxis === 'x' ? 'auto' : '100%',
+              width: scrollAxis === 'x' ? 'max-content' : '100%',
               height: scrollAxis === 'x' ? '100%' : 'auto',
+              display: scrollAxis === 'x' ? 'flex' : 'block',
               // required to allow fixed position content (permits scroll events to propagate to container)
               clipPath: 'inset(0 0 0 0)',
               // required to prevent actively animating content from increasing the scroll height

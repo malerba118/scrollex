@@ -68,13 +68,11 @@ const Section = forwardRef<HTMLDivElement, ScrollSectionProps>(
 
     // Using classes here to keep specificity low so user can override
     const _className = useMemo(() => {
-      const classes = [styles.relative, styles.whiteSpaceNormal, className];
+      const classes = [styles.relative, className];
       if (scrollAxis === 'x') {
         classes.push(styles.heightFull);
-        classes.push(styles.inlineBlock);
       } else {
         classes.push(styles.widthFull);
-        classes.push(styles.block);
       }
       return classes.join(' ');
     }, [scrollAxis, className]);

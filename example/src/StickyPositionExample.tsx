@@ -84,7 +84,7 @@ export default function App() {
       color="whatsapp.400"
     >
       <ScrollSection h="100vh">
-        <ScrollItem keyframes={keyframes.headerImage} pos="absolute" inset={0}>
+        <ScrollItem keyframes={keyframes.headerImage} pos="absolute" h="100vh">
           <Img
             src="https://picsum.photos/id/209/2000/1000"
             objectFit="cover"

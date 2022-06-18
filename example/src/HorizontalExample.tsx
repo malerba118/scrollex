@@ -34,27 +34,25 @@ export default function App() {
     }, 10000);
   }, []);
   useLayoutEffect(() => {
-    alert(ref.current?.offsetHeight);
+    // alert(ref.current?.offsetHeight);
   }, []);
   return (
     <>
       <ScrollContainer ref={ref} scrollAxis="x" h="100vh">
-        <ScrollSection w="100vw" bg="blue.200" style={{ perspective: 500 }}>
-          <ScrollItem display="inline-block" keyframes={keyframes.heading}>
-            <Heading display="inline-block" size="4xl">
-              Yo
-            </Heading>
+        <ScrollSection w="auto" bg="blue.200" style={{ perspective: 500 }}>
+          <ScrollItem display="block" keyframes={keyframes.heading}>
+            <Heading size="4xl">Yo</Heading>
           </ScrollItem>
         </ScrollSection>
-        <ScrollSection w="100vw" bg="green.200">
+        <ScrollSection bg="green.200">
           <ScrollItem
             display="inline-block"
             keyframes={keyframes.heading}
             springs={{ rotateZ: { mass } }}
           >
-            <Heading display="inline-block" size="4xl">
-              What's
-            </Heading>
+            <Heading size="4xl">What's</Heading>
+            <Heading size="4xl">What's</Heading>
+            <Heading size="4xl">What's</Heading>
             <Heading w="300px">
               test test test test test test test test test test test test
               whitespace normal
