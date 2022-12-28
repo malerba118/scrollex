@@ -13,7 +13,7 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "framer-motion": ">=6.0.0",
+    "framer-motion": "^8.0.2",
     "react": ">=17.0.0",
     "react-dom": ">=17.0.0"
   },
@@ -32,8 +32,8 @@
     "cssnano": "^5.0.8",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.6.3",
-    "react": "*",
-    "react-dom": "*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "rollup": "^2.56.3",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-node-polyfills": "^0.2.1",
