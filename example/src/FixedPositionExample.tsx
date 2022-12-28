@@ -55,7 +55,7 @@ export default function App() {
             <Center
               pos="fixed"
               inset={0}
-              // pointerEvents="none"
+              pointerEvents="none"
               style={{ perspective: 600 }}
             >
               <ScrollItem keyframes={keyframes.image} overflow="hidden">

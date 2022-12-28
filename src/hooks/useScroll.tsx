@@ -11,7 +11,7 @@ import {
   motion,
   motionValue,
   MotionValue,
-  useElementScroll,
+  useScroll as useScrollFM,
   useSpring,
   // useVelocity,
 } from 'framer-motion';
@@ -47,7 +47,7 @@ export function useVelocity(value: MotionValue<number>): MotionValue<number> {
   const velocity = useConst(() => motionValue(value.getVelocity()));
 
   useEffect(() => {
-    return value.velocityUpdateSubscribers.add((newVelocity) => {
+    return value.on('velocityChange', (newVelocity) => {
       velocity.set(newVelocity);
     });
   }, [value]);
@@ -57,7 +57,7 @@ export function useVelocity(value: MotionValue<number>): MotionValue<number> {
 
 export const ScrollProvider = forwardRef<HTMLDivElement, ScrollProviderProps>(
   ({ children, style, ...otherProps }: ScrollProviderProps, ref) => {
-    const { scrollX, scrollY } = useElementScroll(ref as any);
+    const { scrollX, scrollY } = useScrollFM({ container: ref as any });
     const rawVelocityX = useVelocity(scrollX);
     const rawVelocityY = useVelocity(scrollY);
     const velocityX = useSpring(rawVelocityX, {
